@@ -72,6 +72,7 @@ public class ApplicationTests {
 	final ObjectMapper mapper = new ObjectMapper();
 
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private CommandLineRunner commandLineRunner;
 
