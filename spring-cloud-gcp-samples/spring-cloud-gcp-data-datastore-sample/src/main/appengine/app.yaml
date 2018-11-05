@@ -16,7 +16,7 @@
 #
 # This sample has manual_scaling set to 1.
 #
-runtime: java
+runtime: java8
 
 instance_class: F2
 
