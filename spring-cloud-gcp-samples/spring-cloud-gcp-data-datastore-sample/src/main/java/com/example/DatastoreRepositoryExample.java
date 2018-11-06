@@ -44,45 +44,6 @@ public class DatastoreRepositoryExample {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner() {
-		return args -> {
-			System.out.println("Remove all records from 'singers' kind");
-			this.singerRepository.deleteAll();
-
-			this.singerRepository.save(new Singer("singer1", "John", "Doe", ImmutableSet.of()));
-
-			Singer maryJane = new Singer("singer2", "Mary", "Jane",
-					ImmutableSet.of(
-							new Album("a", LocalDate.of(2012, Month.JANUARY, 20)),
-							new Album("b", LocalDate.of(2018, Month.FEBRUARY, 12))));
-			Singer scottSmith = new Singer("singer3", "Scott", "Smith",
-					ImmutableSet.of(new Album("c", LocalDate.of(2000, Month.AUGUST, 31))));
-			this.singerRepository.saveAll(ImmutableList.of(maryJane, scottSmith));
-
-			// The following line uses count(), which is a global-query in Datastore. This
-			// has only eventual consistency.
-			Thread.sleep(3000);
-
-			System.out.println("The kind for singers has been cleared and "
-					+ this.singerRepository.count() + " new singers have been inserted:");
-
-			Iterable<Singer> allSingers = this.singerRepository.findAll();
-			allSingers.forEach(System.out::println);
-
-			System.out.println("You can also retrieve by keys for strong consistency: ");
-
-			// Retrieving by keys or querying with a restriction to a single entity group
-			// / family is strongly consistent.
-			this.singerRepository
-					.findAllById(ImmutableList.of("singer1", "singer2", "singer3"))
-					.forEach(System.out::println);
-
-			System.out.println("This concludes the sample.");
-
-		};
-	}
-
-	@Bean
 	public DatastoreCustomConversions datastoreCustomConversions() {
 		return new DatastoreCustomConversions(
 				Arrays.asList(
